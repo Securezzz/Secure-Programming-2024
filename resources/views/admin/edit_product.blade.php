@@ -134,6 +134,9 @@
                     </br>
                         <label>New Image</label>
                         <input type="file" name="image">
+                        @error('image')
+                                <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="input_deg">

@@ -10,6 +10,8 @@ use App\Models\User;
 
 use App\Models\Cart;
 
+use App\Models\Category;
+
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -19,7 +21,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('admin.index');
+        $product = Product::paginate(3);
+        $data = Category::all();
+        return view('admin.index', compact('product', 'data'));
     }
 
     /**

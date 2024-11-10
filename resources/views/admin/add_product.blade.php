@@ -111,6 +111,9 @@
                         <div class="input_deg">
                             <label>Product Image</label>
                             <input type="file" name="image" required>
+                            @error('image')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="input_deg">

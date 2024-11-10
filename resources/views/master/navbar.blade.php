@@ -56,7 +56,7 @@
 
                     @auth
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link " data-bs-toggle="dropdown" style="color: var(--primary)!important">
+                        {{-- <a href="#" class="nav-link " data-bs-toggle="dropdown" style="color: var(--primary)!important"> --}}
 
                             <div i class="bi bi-chevron-down">
                                 {{ Auth::user()->name }}

@@ -21,12 +21,13 @@
         </div>
 
           <!-- Log out               -->
-          <div class="list-inline-item logout">
-            <form method="POST" action="{{ route('logout') }}">
+          <ul class="nav nav-pillslogout">
+            <a type="button" class="nav-item btn btn-light mr-1 text-dark" href="{{ route('/')}}">Go to user page</a>
+            <form method="POST" action="{{ route('logout') }}" class="nav-item">
                 @csrf
-                <input type="submit" value="Logout">
+                <input type="submit" value="Logout" type="button" class="btn btn-danger">
             </form>
-        </div>
+        </ul>
       </div>
     </nav>
   </header>

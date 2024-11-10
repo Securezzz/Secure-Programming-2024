@@ -28,24 +28,31 @@ class AdminController extends Controller
      */
     public function add_category(Request $request)
     {
+        // Validasi input untuk memastikan 'category' wajib diisi
+        $request->validate([
+            'category' => 'required|string|max:255'
+        ]);
+
+        // Cek apakah kategori dengan nama yang sama sudah ada
+        $existingCategory = Category::where('category_name', $request->category)->first();
+
+        if ($existingCategory) {
+            // Notifikasi jika kategori sudah ada
+            toastr()->error('Category already exists.');
+            return redirect()->back();
+        }
+
+        // Jika tidak ada, buat kategori baru
         $category = new Category;
-
-        /**
-         * Tulisannya yang abis "->" kan "category" itu didapet dari file category.blade.php
-         * yang ada input text namenya category (itu yang dipake)
-         */
         $category->category_name = $request->category;
-
         $category->save();
 
-        /**
-         * Tambah buat notif toastr kalau berhasil add category
-         */
-        toastr()->timeOut(10000)->closeButton()->addSuccess('
-        Category Added Successfully');
+        // Notifikasi berhasil menambahkan kategori
+        toastr()->timeOut(10000)->closeButton()->addSuccess('Category Added Successfully');
 
         return redirect()->back();
     }
+
 
     public function delete_category($id)
     {
@@ -87,39 +94,48 @@ class AdminController extends Controller
         return view('admin.add_product', compact('category'));
     }
 
-    public function upload_product(Request $request)
-    {
-        $data = new Product;
+    public function upload_product(Request $request){
+        // Validasi input termasuk file gambar
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            's_price' => 'required|numeric',
+            'disc' => 'nullable|numeric',
+            'f_price' => 'required|numeric',
+            'qty' => 'required|integer',
+            'category' => 'required|string',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validasi untuk gambar
+        ]);
 
+        // Pembuatan instance produk baru
+        $data = new Product;
         $data->title = $request->title;
         $data->description = $request->description;
         $data->starting_price = $request->s_price;
         $data->discount = $request->disc;
-
         $data->final_price = $request->f_price;
-
         $data->quantity = $request->qty;
         $data->category = $request->category;
 
+        // Proses unggah gambar
         $image = $request->image;
 
-        if($image)
-        {
-            $imagename = time().'.'.$image->getClientOriginalExtension();
-            /**
-             * Masuk ke folder products di public
-             */
-            $request->image->move('products', $imagename);
+        if ($image) {
+            $imagename = time() . '.' . $image->getClientOriginalExtension();
+            // Simpan gambar ke folder 'products' di direktori public
+            $image->move(public_path('products'), $imagename);
             $data->image = $imagename;
         }
 
-        /* Pesan sukses */
-        toastr()->timeOut(10000)->closeButton()->addSuccess('
-        Product Added Successfully');
+        // Pesan sukses
+        toastr()->timeOut(10000)->closeButton()->addSuccess('Product Added Successfully');
 
+        // Simpan data ke database
         $data->save();
+
         return redirect()->back();
-    }
+}
+
 
     public function view_product()
     {
@@ -157,40 +173,60 @@ class AdminController extends Controller
     }
 
     public function update_product(Request $request, $id)
-    {
-        $data = Product::find($id);
+{
+    // Validasi input termasuk file gambar
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'description' => 'required|string',
+        's_price' => 'required|numeric',
+        'disc' => 'nullable|numeric',
+        'f_price' => 'required|numeric',
+        'qty' => 'required|integer',
+        'category' => 'required|string',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validasi untuk gambar, opsional
+    ]);
 
-        $data->title = $request->title;
-        $data->description = $request->description;
-        $data->starting_price = $request->s_price;
-        $data->discount = $request->disc;
+    // Cari produk berdasarkan ID
+    $data = Product::find($id);
 
-        $data->final_price = $request->f_price;
+    if (!$data) {
+        toastr()->timeOut(10000)->closeButton()->addError('Product not found');
+        return redirect()->back();
+    }
 
-        $data->quantity = $request->qty;
-        $data->category = $request->category;
+    // Update field dengan data dari request
+    $data->title = $request->title;
+    $data->description = $request->description;
+    $data->starting_price = $request->s_price;
+    $data->discount = $request->disc;
+    $data->final_price = $request->f_price;
+    $data->quantity = $request->qty;
+    $data->category = $request->category;
 
-        $image = $request->image;
+    // Proses penggantian gambar
+    $image = $request->file('image');
 
-        $image_path = public_path('products/'.$data->image);
-        if(file_exists($image_path) && $image='')
-        {
+    if ($image) {
+        // Hapus gambar lama jika ada
+        $image_path = public_path('products/' . $data->image);
+        if (file_exists($image_path) && $data->image) {
             unlink($image_path);
         }
 
-        if ($image && $image instanceof \Illuminate\Http\UploadedFile) {
-            $imagename = time().'.'.$image->getClientOriginalExtension();
-            $image->move('products', $imagename);
-            $data->image = $imagename;
-        }
-
-        $data->save();
-
-        toastr()->timeOut(10000)->closeButton()->addSuccess('
-        Product Updated Successfully');
-
-        return redirect('/view_product');
+        // Simpan gambar baru
+        $imagename = time() . '.' . $image->getClientOriginalExtension();
+        $image->move(public_path('products'), $imagename);
+        $data->image = $imagename;
     }
+
+    // Simpan perubahan ke database
+    $data->save();
+
+    toastr()->timeOut(10000)->closeButton()->addSuccess('Product Updated Successfully');
+
+    return redirect('/view_product');
+}
+
 
     public function product_search(Request $request)
     {

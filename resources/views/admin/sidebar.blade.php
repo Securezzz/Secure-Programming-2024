@@ -15,8 +15,7 @@
       <ul class="list-unstyled">
               <li class="{{set_active('admin/dashboard')}}"><a href="{{url('admin/dashboard')}}"> <i class="icon-home"></i>Beranda </a></li>
               <li class="{{set_active('view_category')}}">
-                <a href="{{url('view_category')}}"> <i class="icon-grid"></i>
-                    Kategori
+                <a href="{{url('view_category')}}"> <i class="icon-grid"></i>Kategori
                 </a>
               </li>
 
