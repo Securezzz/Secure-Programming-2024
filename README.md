@@ -13,17 +13,13 @@ EcoSavor is a website that provides a variety of leftover food that is still fit
    git clone https://github.com/avalonsofteng/AOL-softeng.git
    cd your-repo
    ```
-   switch to testing
-   ```
-   git switch testing
-   ```
 
 2. **Install Dependencies**
     ```
     composer install
     composer require laravel/breeze --dev
     npm install
-    npm run dev
+    npm run build
     ```
 
 3. **Database Configuration**
@@ -35,7 +31,7 @@ EcoSavor is a website that provides a variety of leftover food that is still fit
         ```
         php artisan key:generate    
         ```  
-    - edit file .env :
+    - edit file .env (optional):
         ```
         DB_CONNECTION=mysql
         DB_HOST=127.0.0.1
@@ -52,7 +48,7 @@ EcoSavor is a website that provides a variety of leftover food that is still fit
 
 5. **Run the Server**
     ```
-    php artisan ser
+    php artisan serve
     ```
 
 # Overview
