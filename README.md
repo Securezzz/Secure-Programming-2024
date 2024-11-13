@@ -10,7 +10,7 @@ EcoSavor is a website that provides a variety of leftover food that is still fit
 
 1. **Clone the Repository**
    ```
-   git clone https://github.com/avalonsofteng/AOL-softeng.git
+   git clone https://github.com/Securezzz/Secure-Programming-2024.git
    cd your-repo
    ```
 
