@@ -4,9 +4,8 @@
         --bg: #efe5d8;
         --bgc: #DEC493;
     }
-    
-    .active
-    {
+
+    .active {
         font-weight: bold!important;
     }
 
@@ -23,7 +22,14 @@
 
     .btn-primary:hover {
         background-color: var(--bgc)!important;
-        
+    }
+
+    /* Validasi Password */
+    .invalid {
+        color: red;
+    }
+    .valid {
+        color: green;
     }
 </style>
 
@@ -45,7 +51,7 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
-        <!-- PhoneNum -->
+        <!-- Phone Number -->
         <div>
             <x-input-label for="phone" :value="__('Phone Number')" />
             <x-text-input id="phone" class="block mt-1 w-full" type="text" name="phone" :value="old('phone')" required autofocus autocomplete="phone" />
@@ -59,9 +65,18 @@
             <x-text-input id="password" class="block mt-1 w-full"
                             type="password"
                             name="password"
-                            required autocomplete="new-password" />
+                            required autocomplete="new-password" oninput="validatePassword()" />
 
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
+
+            <!-- Password Protocol -->
+            <div id="password-requirements" class="mt-2 text-sm text-gray-600">
+                <p id="length" class="invalid">At least 8 Characters</p>
+                <p id="lowercase" class="invalid">At least 1 lowercase letter</p>
+                <p id="uppercase" class="invalid">At least 1 uppercase letter</p>
+                <p id="number" class="invalid">At least 1 number</p>
+                <p id="symbol" class="invalid">At least 1 symbol (@$!%*?&)</p>
+            </div>
         </div>
 
         <!-- Confirm Password -->
@@ -85,4 +100,26 @@
             </button>
         </div>
     </form>
+
+    <!-- JavaScript Validasi Password -->
+    <script>
+        function validatePassword() {
+            const password = document.getElementById('password').value;
+
+            document.getElementById('length').classList.toggle('valid', password.length >= 8);
+            document.getElementById('length').classList.toggle('invalid', password.length < 8);
+
+            document.getElementById('lowercase').classList.toggle('valid', /[a-z]/.test(password));
+            document.getElementById('lowercase').classList.toggle('invalid', !/[a-z]/.test(password));
+
+            document.getElementById('uppercase').classList.toggle('valid', /[A-Z]/.test(password));
+            document.getElementById('uppercase').classList.toggle('invalid', !/[A-Z]/.test(password));
+
+            document.getElementById('number').classList.toggle('valid', /[0-9]/.test(password));
+            document.getElementById('number').classList.toggle('invalid', !/[0-9]/.test(password));
+
+            document.getElementById('symbol').classList.toggle('valid', /[@$!%*?&#]/.test(password));
+            document.getElementById('symbol').classList.toggle('invalid', !/[@$!%*?&#]/.test(password));
+        }
+    </script>
 </x-guest-layout>

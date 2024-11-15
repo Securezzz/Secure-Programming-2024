@@ -51,6 +51,7 @@
         <div>
             <x-input-label for="update_password_password" :value="__('New Password')" />
             <x-text-input id="update_password_password" name="password" type="password" class="mt-1 block w-full" autocomplete="new-password" />
+            <p class="text-sm text-gray-500 mt-1">Passwords must have a minimum of 8 characters, including lowercase letters, uppercase letters, numbers, and symbols.</p>
             <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-2" />
         </div>
 

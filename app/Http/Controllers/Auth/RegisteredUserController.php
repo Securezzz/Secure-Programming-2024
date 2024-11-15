@@ -32,7 +32,16 @@ class RegisteredUserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:100'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:100', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'password' => [
+                'required', 
+                'string',
+                'min:8',              // Minimal 8 karakter
+                'regex:/[a-z]/',      // Harus mengandung huruf kecil
+                'regex:/[A-Z]/',      // Harus mengandung huruf kapital
+                'regex:/[0-9]/',      // Harus mengandung angka
+                'regex:/[@$!%*?&#]/',
+                'confirmed', 
+                Rules\Password::defaults()],
             'phone' => ['required', 'regex:/^(?:\+62|62|0)8[1-9][0-9]{6,10}$/'],
         ]);
 
@@ -44,6 +53,9 @@ class RegisteredUserController extends Controller
         ]);
 
         event(new Registered($user));
+
+        // Tambahkan flash message
+        session()->alert('status', 'Registration successful!');
 
         return redirect(route('login', absolute: false));
     }

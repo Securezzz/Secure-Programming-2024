@@ -17,13 +17,21 @@ class PasswordController extends Controller
     {
         $validated = $request->validateWithBag('updatePassword', [
             'current_password' => ['required', 'current_password'],
-            'password' => ['required', Password::defaults(), 'confirmed'],
+            'password' => [
+            'nullable',            // buat password opsional saat update
+            'string',
+            'min:8',               // minimal 8 karakter
+            'regex:/[a-z]/',       // setidaknya ada satu huruf kecil
+            'regex:/[A-Z]/',       // setidaknya ada satu huruf kapital
+            'regex:/[0-9]/',       // setidaknya ada satu angka
+            'regex:/[@$!%*?&#]/',  // setidaknya ada satu simbol
+            Password::defaults(), 'confirmed'],
         ]);
 
         $request->user()->update([
             'password' => Hash::make($validated['password']),
         ]);
-
+        session()->flash('status', 'Password updated successfully!');
         return back()->with('status', 'password-updated');
     }
 }
