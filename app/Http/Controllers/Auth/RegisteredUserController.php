@@ -53,9 +53,9 @@ class RegisteredUserController extends Controller
         ]);
 
         event(new Registered($user));
-
+        
         // Tambahkan flash message
-        session()->alert('status', 'Registration successful!');
+        session()->flash('status', 'Registration successful!');
 
         return redirect(route('login', absolute: false));
     }
