@@ -35,7 +35,7 @@
                 </div>
                 <div class="col-lg-3">
                     <div class="d-flex justify-content-end pt-3">
-                        <a class="btn btn-outline-secondary me-2 btn-md-square rounded-circle" href="mailto:avalonsofteng@gmail.com"><i class="fas fa-envelope"></i></a>
+                        <a class="btn btn-outline-secondary me-2 btn-md-square rounded-circle" href="mailto:secprog.ngalam@gmail.com"><i class="fas fa-envelope"></i></a>
                     </div>
                 </div>
             </div>
@@ -52,8 +52,8 @@
             <div class="col">
                 <div class="footer-item">
                     <h4 class="text-light mb-3">Kontak Kami</h4>
-                    <p>Alamat: Jl. Avalon No 9, Jakarta Barat 11530</p>
-                    <p>Email: avalonsofteng@gmail.com</p>
+                    <p>Alamat: Jl. Ecosavor No 9, Jakarta Barat 11530</p>
+                    <p>Email: secprog.ngalam@gmail.com</p>
                     <p>Telepon: +62 8123 4567 8910</p>
                     <p>Menerima pembayaran</p>
                     <img src="img/payment.png" class="img-fluid" alt="">

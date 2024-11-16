@@ -36,7 +36,7 @@ EcoSavor is a website that provides a variety of leftover food that is still fit
         DB_CONNECTION=mysql
         DB_HOST=127.0.0.1
         DB_PORT=3306
-        DB_DATABASE=Avalon
+        DB_DATABASE=example_db
         DB_USERNAME=root
         DB_PASSWORD=
         ```

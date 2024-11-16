@@ -22,8 +22,8 @@
     <div class="container topbar bg-primary d-none d-lg-block" style="background-color: var(--primary)!important">
         <div class="d-flex justify-content-between">
             <div class="top-info ps-2">
-                <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#" class="text-white">Jl. Avalon No 9, Jakarta Barat 11530</a></small>
-                <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">avalonsofteng@gmail.com</a></small>
+                <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#" class="text-white">Jl. Ecosavor No 9, Jakarta Barat 11530</a></small>
+                <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">secprog.ngalam@gmail.com</a></small>
             </div>
         </div>
     </div>
@@ -57,7 +57,7 @@
                             @else
                                 <img src="{{ asset('img/avatar.jpg') }}" alt="Default Profile Photo" class="profile-photo me-2">
                             @endif
-                            
+
                             <!-- Nama Pengguna -->
                             {{-- <span>{{ Auth::user()->name }}</span> --}}
                         </a>

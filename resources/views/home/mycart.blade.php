@@ -101,7 +101,7 @@
                 </div>
                 <div class="modal-body text-center">
                     <p>Scan QR code di bawah untuk menyelesaikan transaksi:</p>
-                    <img src="qris-example.png" alt="QRIS Code" class="img-fluid" />
+                    <img src="../img/qrcode.png" alt="QRIS Code" class="img-fluid" />
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Urungkan</button>
@@ -123,8 +123,37 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Handle "Bayar" button click
             document.getElementById('confirmPayment').addEventListener('click', function() {
-                $('#qrisModal').modal('show');
+                const cartItems = [];
+                document.querySelectorAll('tbody tr').forEach(row => {
+                    cartItems.push({
+                        id: row.getAttribute('data-item-id'),
+                        quantity: parseInt(row.querySelector('.quantity-input').value)
+                    });
+                });
+
+                // Kirim permintaan AJAX untuk validasi
+                $.ajax({
+                    url: '/validate-payment',
+                    type: 'POST',
+                    data: {
+                        _token: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        cart_items: cartItems,
+                        calculated_total: parseFloat(document.getElementById('grand-total').innerText)
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            $('#qrisModal').modal('show');
+                            // Proses pembayaran selanjutnya
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function(error) {
+                        console.error('Error:', error);
+                    }
+                });
             });
+
 
             // Handle "Pembayaran Berhasil" button click in modal
             document.getElementById('confirmPaymentModal').addEventListener('click', function() {

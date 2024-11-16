@@ -116,3 +116,6 @@ Route::post('/clearCartItems', 'CartController@clearCartItems')->name('clear.car
 use App\Http\Controllers\CartController;
 
 Route::post('/clearCart', [CartController::class, 'clearCart'])->name('clearCart');
+
+Route::post('/validate-payment', [CartController::class, 'validatePayment'])->name('validate.payment');
+
